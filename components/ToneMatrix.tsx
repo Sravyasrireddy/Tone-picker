@@ -7,24 +7,22 @@ import { getToneLabel, getToneTooltip, PROMPT_VERSION } from '@/lib/prompt'
 import { toast } from 'sonner'
 
 /**
- * Tone categories organized in 2-column layout matching the design
+ * Tone categories organized in 2-column layout with unique coordinates
+ * Now using only 9 tones to fit perfectly in the 3x3 coordinate grid
  */
 const TONE_CATEGORIES = {
   left: [
-    { label: 'Professional', coords: { x: 0, y: -1 } },
-    { label: 'Friendly', coords: { x: -1, y: 0 } },
-    { label: 'Confident', coords: { x: -1, y: -1 } },
-    { label: 'Persuasive', coords: { x: -1, y: 1 } },
-    { label: 'Concise', coords: { x: 0, y: 1 } },
-    { label: 'Humorous', coords: { x: 1, y: 1 } }
+    { label: 'Professional', coords: { x: 0, y: -1 } },   // Neutral + Friendly
+    { label: 'Friendly', coords: { x: -1, y: 0 } },       // Casual + Neutral  
+    { label: 'Confident', coords: { x: -1, y: -1 } },     // Casual + Friendly
+    { label: 'Persuasive', coords: { x: -1, y: 1 } },     // Casual + Direct
+    { label: 'Concise', coords: { x: 0, y: 1 } }          // Neutral + Direct
   ],
   right: [
-    { label: 'Casual', coords: { x: 1, y: -1 } },
-    { label: 'Formal', coords: { x: 0, y: 0 } },
-    { label: 'Empathetic', coords: { x: 1, y: 0 } },
-    { label: 'Creative', coords: { x: 2, y: 0 } },
-    { label: 'Detailed', coords: { x: 2, y: 1 } },
-    { label: 'Serious', coords: { x: 2, y: -1 } }
+    { label: 'Casual', coords: { x: 1, y: -1 } },         // Formal + Friendly
+    { label: 'Formal', coords: { x: 0, y: 0 } },          // Neutral + Neutral
+    { label: 'Empathetic', coords: { x: 1, y: 0 } },      // Formal + Neutral
+    { label: 'Humorous', coords: { x: 1, y: 1 } }         // Formal + Direct
   ]
 }
 
@@ -149,9 +147,9 @@ export function ToneMatrix() {
         <div className="grid grid-cols-2 gap-6 mb-8 flex-1">
           {/* Left Column */}
           <div className="space-y-3">
-            {TONE_CATEGORIES.left.map((tone) => (
+            {TONE_CATEGORIES.left.map((tone, index) => (
               <button
-                key={`${tone.coords.x}-${tone.coords.y}`}
+                key={`left-${index}-${tone.label}`}
                 onClick={() => handleCellClick(tone.coords)}
                 disabled={ui.isTransforming}
                 className={`${getCellClasses(tone.coords)} tone-matrix-btn w-full`}
@@ -177,9 +175,9 @@ export function ToneMatrix() {
           
           {/* Right Column */}
           <div className="space-y-3">
-            {TONE_CATEGORIES.right.map((tone) => (
+            {TONE_CATEGORIES.right.map((tone, index) => (
               <button
-                key={`${tone.coords.x}-${tone.coords.y}-right`}
+                key={`right-${index}-${tone.label}`}
                 onClick={() => handleCellClick(tone.coords)}
                 disabled={ui.isTransforming}
                 className={`${getCellClasses(tone.coords)} tone-matrix-btn w-full`}
