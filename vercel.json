@@ -1,0 +1,11 @@
+{
+  "functions": {
+    "app/api/tone/route.ts": {
+      "maxDuration": 10
+    }
+  },
+  "regions": ["iad1"],
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs"
+}
